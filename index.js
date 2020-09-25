@@ -1,6 +1,7 @@
 const express = require("express");
 const PORT = 3001;
 const app = express();
+
 const persons = [
   { id: 1, name: "Dave", number: "092-6455767" },
   { id: 2, name: "Boogie", number: "092-6353437" },
@@ -9,13 +10,34 @@ const persons = [
   { id: 5, name: "Anastasia", number: "092-08967643" },
   { id: 6, name: "Rabel", number: "092-78665434" },
 ];
-app.get("/api/persons", (req, res) => {
-  res.json(persons);
-});
-app.get("/api/persons/:id", (req, res) => {
-  const person = persons.find((person) => person.id === Number(req.params.id));
-  return person ? res.json(person) : res.status(404).end();
-});
+app
+  .route("/api/persons")
+  .get((req, res) => {
+    res.json(persons);
+  })
+  .post((req, res) => {});
+
+app
+  .route("/api/persons/:id")
+  .get((req, res) => {
+    const { id } = req.params;
+    const person = persons.find((person) => person.id === Number(id));
+    return person ? res.json(person) : res.status(404).end();
+  })
+  .delete((req, res) => {
+    const { id } = req.params;
+
+    if (!persons.find((person) => person.id === Number(id)))
+      return res.status(404).end();
+
+    return res.json(
+      persons.splice(
+        persons.indexOf(persons.find((person) => person.id === Number(id))),
+        1
+      )[0]
+    );
+  });
+
 app.get("/info", (req, res) => {
   res.send(`<p>Phonebook has info ${persons.length} people<br/>${Date()}</p>`);
 });
