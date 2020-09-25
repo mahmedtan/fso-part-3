@@ -1,0 +1,27 @@
+{
+  "name": "fso-part-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahmedtan/fso-part-3.git"
+  },
+  "author": "M.Ahmed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mahmedtan/fso-part-3/issues"
+  },
+  "homepage": "https://github.com/mahmedtan/fso-part-3#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
