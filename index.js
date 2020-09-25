@@ -12,6 +12,10 @@ const persons = [
 app.get("/api/persons", (req, res) => {
   res.json(persons);
 });
+app.get("/api/persons/:id", (req, res) => {
+  const person = persons.find((person) => person.id === Number(req.params.id));
+  return person ? res.json(person) : res.status(404).end();
+});
 app.get("/info", (req, res) => {
   res.send(`<p>Phonebook has info ${persons.length} people<br/>${Date()}</p>`);
 });
