@@ -19,13 +19,19 @@ app
   })
   .post((req, res) => {
     const { name, number } = req.body;
+    if (!(name && number)) {
+      return res.status(400).json({ error: "name or number not provided" });
+    } else if (persons.find((p) => p.name === name)) {
+      return res.status(409).json({ error: "name must be unique" });
+    }
+
     const person = {
       name,
       number,
       id: Math.floor(Math.random() * (1000 - 100) + 100),
     };
     persons.push(person);
-    res.json(person);
+    return res.json(person);
   });
 
 app
