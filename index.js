@@ -41,7 +41,7 @@ app
       id: Math.floor(Math.random() * (1000 - 100) + 100),
     };
     persons.push(person);
-    return res.json(person);
+    return res.status(201).json(person);
   });
 
 app
@@ -57,12 +57,14 @@ app
     if (!persons.find((person) => person.id === Number(id)))
       return res.status(404).end();
 
-    return res.json(
-      persons.splice(
-        persons.indexOf(persons.find((person) => person.id === Number(id))),
-        1
-      )[0]
-    );
+    return res
+      .status(202)
+      .json(
+        persons.splice(
+          persons.indexOf(persons.find((person) => person.id === Number(id))),
+          1
+        )[0]
+      );
   });
 
 app.get("/info", (req, res) => {
