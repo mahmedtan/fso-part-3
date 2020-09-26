@@ -28,7 +28,6 @@ app
     if (!(name && number)) {
       return res.status(400).json({ error: "name or number not provided" });
     }
-
     const person = new Person({
       name,
       number,
