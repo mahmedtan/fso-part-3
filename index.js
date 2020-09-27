@@ -71,6 +71,7 @@ app
     const { params, body } = req;
     Person.findByIdAndUpdate(params.id, body, {
       new: true,
+      runValidators: true,
     })
       .then((person) => {
         if (person) res.json(person);
@@ -93,8 +94,9 @@ app.use((error, req, res, next) => {
   console.log(chalk.bgRed(error.message));
   if (error.name === "CastError")
     res.status(400).json({ error: "malformed id" });
-  else if (error.name === "ValidationError")
+  else if (error.name === "ValidationError") {
     res.status(400).json({ error: error.message });
+  }
   next(error);
 });
 
