@@ -82,6 +82,7 @@ app.use((error, req, res, next) => {
     res.status(400).json({ error: "malformed id" });
   else next(error);
 });
+
 app.listen(PORT, () => {
   console.log(`Server running on PORT: ` + chalk.magenta(PORT));
 });
