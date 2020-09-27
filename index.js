@@ -66,6 +66,19 @@ app
       .catch((error) => {
         next(error);
       });
+  })
+  .put((req, res, next) => {
+    const { params, body } = req;
+    Person.findByIdAndUpdate(params.id, body, {
+      new: true,
+    })
+      .then((person) => {
+        if (person) res.json(person);
+        else res.status(404).end();
+      })
+      .catch((error) => {
+        next(error);
+      });
   });
 
 app.get("/info", (req, res) => {
