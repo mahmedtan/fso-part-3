@@ -82,11 +82,11 @@ app
   });
 
 app.get("/info", (req, res) => {
-  res.send(
-    `<p>Phonebook has info ${Person.find({}).then(
-      People.length
-    )} people<br/>${Date()}</p>`
-  );
+  Person.find({}).then((people) => {
+    res.send(
+      `<p>Phonebook has info about ${people.length} people<br/>${Date()}</p>`
+    );
+  });
 });
 
 app.use((error, req, res, next) => {
