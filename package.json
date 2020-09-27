@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "git push heroku master",
-    "build-ui": "rm -rf build && cd ../fso-exercises/part2/phonebook && npm run build && cp -rf build ../../part3 && cd ../../part3",
+    "build-ui": "rm -rf build && cd ../fso-exercises/part2/phonebook && npm run build && cp -rf build ../../../fso-part-3 && cd ../../../fso-part-3",
     "start": "node index",
     "dev": "nodemon index"
   },
