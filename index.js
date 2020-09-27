@@ -72,7 +72,7 @@ app
     Person.findByIdAndUpdate(params.id, body, {
       new: true,
       runValidators: true,
-      context: query,
+      context: "query",
     })
       .then((person) => {
         if (person) res.json(person);
