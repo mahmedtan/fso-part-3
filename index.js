@@ -20,10 +20,14 @@ app.use(
 
 app
   .route("/api/persons")
-  .get((req, res) => {
-    Person.find({}).then((people) => res.json(people));
+  .get((req, res, next) => {
+    Person.find({})
+      .then((people) => res.json(people))
+      .catch((error) => {
+        next(error);
+      });
   })
-  .post((req, res) => {
+  .post((req, res, next) => {
     const { name, number } = req.body;
     if (!(name && number)) {
       return res.status(400).json({ error: "name or number not provided" });
@@ -32,32 +36,52 @@ app
       name,
       number,
     });
-    person.save().then((person) => res.status(201).json(person));
+    person
+      .save()
+      .then((person) => res.status(201).json(person))
+      .catch((error) => {
+        next(error);
+      });
   });
 
 app
   .route("/api/persons/:id")
-  .get((req, res) => {
+  .get((req, res, next) => {
     const { id } = req.params;
-    Person.findById(id).then((person) => {
-      if (!person) return res.status(404).end();
-      return res.json(person);
-    });
+    Person.findById(id)
+      .then((person) => {
+        if (person) res.json(person);
+        else res.status(404).end();
+      })
+      .catch((error) => {
+        next(error);
+      });
   })
-  .delete((req, res) => {
-    const { id } = req.params;
-
-    Person.findById(id).then((person) => {
-      if (!person) return res.status(404).end();
-    });
-
-    Person.findByIdAndDelete(id).then((person) => res.status(202).json(person));
+  .delete((req, res, next) => {
+    Person.findByIdAndDelete(req.params.id)
+      .then((person) => {
+        if (person) res.status(204).json(person);
+        else res.status(404).end();
+      })
+      .catch((error) => {
+        next(error);
+      });
   });
 
 app.get("/info", (req, res) => {
-  res.send(`<p>Phonebook has info ${persons.length} people<br/>${Date()}</p>`);
+  res.send(
+    `<p>Phonebook has info ${Person.find({}).then(
+      People.length
+    )} people<br/>${Date()}</p>`
+  );
 });
 
+app.use((error, req, res, next) => {
+  console.log(chalk.bgRed(error.message));
+  if (error.name === "CastError")
+    res.status(400).json({ error: "malformed id" });
+  else next(error);
+});
 app.listen(PORT, () => {
   console.log(`Server running on PORT: ` + chalk.magenta(PORT));
 });
