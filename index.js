@@ -93,7 +93,9 @@ app.use((error, req, res, next) => {
   console.log(chalk.bgRed(error.message));
   if (error.name === "CastError")
     res.status(400).json({ error: "malformed id" });
-  else next(error);
+  else if (error.name === "ValidationError")
+    res.status(400).json({ error: error.message });
+  next(error);
 });
 
 app.listen(PORT, () => {

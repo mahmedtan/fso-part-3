@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const chalk = require("chalk");
+const uniqueValidator = require("mongoose-unique-validator");
 
 console.log("Connecting to MongoDB Atlas");
 
@@ -17,7 +18,7 @@ mongoose
   );
 
 const personSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   number: { type: String, required: true },
 });
 personSchema.set("toJSON", {
@@ -27,5 +28,6 @@ personSchema.set("toJSON", {
     delete ret.__v;
   },
 });
+personSchema.plugin(uniqueValidator);
 
 module.exports = model("Person", personSchema);
