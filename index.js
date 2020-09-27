@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("build"));
 
-morgan.token("body", (req, res) => {
+morgan.token("body", (req) => {
   return Object.keys(req.body).length ? JSON.stringify(req.body) : "";
 });
 app.use(

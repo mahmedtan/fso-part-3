@@ -8,6 +8,7 @@
     "deploy": "git push heroku master",
     "build-ui": "rm -rf build && cd ../fso-exercises/part2/phonebook && npm run build && cp -rf build ../../../fso-part-3 && cd ../../../fso-part-3",
     "start": "node index",
+    "lint": "eslint .",
     "dev": "nodemon index"
   },
   "repository": {
@@ -30,6 +31,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^7.10.0",
     "nodemon": "^2.0.4"
   }
 }
